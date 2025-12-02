@@ -6,59 +6,74 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Wisata Management</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="{{ route('admin.wisata.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus fa-sm text-white-50"></i> Add New Wisata
         </a>
     </div>
 
-    <!-- Content Row -->
-    <div class="row">
-        
-        <!-- Japan Card -->
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow">
-                <img class="card-img-top" src="https://awsimages.detik.net.id/community/media/visual/2022/09/13/lanskap-gunung-fuji-yang-indahnya-engga-ada-obat-1_169.jpeg?w=600&q=90" alt="Japan">
-                <div class="card-body">
-                    <h5 class="card-title">Japan</h5>
-                    <p class="card-text">In publishing and graphic design, Lorem ipsum is a common placeholder text used to demonstrate the visual form of a document.</p>
-                    <div class="d-flex justify-content-between">
-                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                    </div>
-                </div>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Destinasi Wisata</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th width="5%">No</th>
+                            <th width="15%">Gambar</th>
+                            <th width="20%">Nama Wisata</th>
+                            <th width="40%">Deskripsi</th>
+                            <th width="20%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($wisata as $index => $item)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>
+                                @if($item->gambar)
+                                    <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama_wisata }}" 
+                                         style="width: 100px; height: 70px; object-fit: cover; border-radius: 5px;">
+                                @else
+                                    <span class="text-muted">No Image</span>
+                                @endif
+                            </td>
+                            <td>{{ $item->nama_wisata }}</td>
+                            <td>{{ Str::limit($item->deskripsi, 100) }}</td>
+                            <td>
+                                <a href="{{ route('admin.wisata.edit', $item->id) }}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('admin.wisata.delete', $item->id) }}" method="POST" class="d-inline" 
+                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus destinasi ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center">Belum ada data destinasi wisata</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <!-- Switzerland Card -->
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow">
-                <img class="card-img-top" src="https://static.toiimg.com/thumb/msid-96203700,width-748,height-499,resizemode=4,imgsize-239734/.jpg" alt="Switzerland">
-                <div class="card-body">
-                    <h5 class="card-title">Switzerland</h5>
-                    <p class="card-text">In publishing and graphic design, Lorem ipsum is a common placeholder text used to demonstrate the visual form of a document.</p>
-                    <div class="d-flex justify-content-between">
-                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bali Card -->
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow">
-                <img class="card-img-top" src="https://d2lwt6tidfiof0.cloudfront.net/images/background/bg-indonesia.webp" alt="Bali">
-                <div class="card-body">
-                    <h5 class="card-title">Bali</h5>
-                    <p class="card-text">In publishing and graphic design, Lorem ipsum is a common placeholder text used to demonstrate the visual form of a document.</p>
-                    <div class="d-flex justify-content-between">
-                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 @endsection
