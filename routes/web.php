@@ -5,6 +5,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\WisataController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
@@ -13,6 +14,7 @@ Route::get('/', function () {
 Route::get('/index', [IndexController::class, 'index']);
 Route::get('/wisata', [WisataController::class, 'wisata']);
 Route::get('/about', [AboutController::class, 'about']);
+Route::get('/category', [CategoryController::class, 'category']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () {

@@ -27,7 +27,8 @@ class AdminController extends Controller
     // CRUD Wisata
     public function wisata()
     {
-        $wisata = Wisata::latest()->get();
+        // Pagination: 5 
+        $wisata = Wisata::latest()->paginate(5);
         return view('admin.wisata', compact('wisata'));
     }
 

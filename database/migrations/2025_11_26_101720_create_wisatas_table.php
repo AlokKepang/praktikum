@@ -15,10 +15,16 @@ return new class extends Migration
             $table->string('gambar')->nullable();
             $table->timestamps();
         });
+        Schema::create('category', function (Blueprint $table) {
+            $table->id();
+            $table->string('jenis_negara');
+            $table->timestamps();
+        });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('wisatas');
+        Schema::dropIfExists('category');
     }
 };

@@ -69,7 +69,7 @@
 
     <!-- Nav Item - Back to Website -->
     <li class="nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/index" target="_blank">
             <i class="fas fa-fw fa-globe"></i>
             <span>Back to Website</span>
         </a>
